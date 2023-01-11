@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+// import Button from 'components/Button';
+import './App.scss';
 
-function App() {
+const App = () => {
+  const [show, setShow] = useState(false);
+  const [count, setCount] = useState(0);
+  const toggleShow = () => {
+    setShow((p) => !p);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <header className="App-header">Header</header>
+      {show && <div data-testid="test">I am here</div>}
+      {/* <Button /> */}
+      <div data-testid="count">{count}</div>
+      <button onClick={toggleShow}>Click</button>
+      <button onClick={() => setCount((p) => p + 1)}>Increment</button>
     </div>
   );
-}
+};
 
 export default App;
