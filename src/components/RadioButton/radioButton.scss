@@ -1,0 +1,13 @@
+.radio-button {
+  & input {
+    display: none;
+  }
+  & button {
+    width: 100%;
+  }
+
+  & button.checked {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+}
