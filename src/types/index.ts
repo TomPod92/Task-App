@@ -4,6 +4,12 @@ export enum TaskStatus {
   Closed = 'closed',
 }
 
+export const taskStatusOrder = [
+  TaskStatus.Open,
+  TaskStatus.Pending,
+  TaskStatus.Closed,
+];
+
 export enum TaskPriority {
   Low,
   Medium,
@@ -11,8 +17,8 @@ export enum TaskPriority {
 }
 
 export interface HistoryEntry {
-  date: Date;
-  description: string;
+  date: string;
+  changeDescription: string;
 }
 
 export interface Task {
@@ -21,5 +27,5 @@ export interface Task {
   description: string;
   priority: TaskPriority;
   status: TaskStatus;
-  history?: HistoryEntry[];
+  history: HistoryEntry[];
 }
