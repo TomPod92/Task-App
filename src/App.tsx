@@ -1,16 +1,50 @@
 import { useState, useEffect } from 'react';
 // import Button from 'components/Button';
-import { Task } from 'types';
+import { TaskStatus, Task, taskStatusOrder } from 'types';
 import { dummyTasksData } from 'dummy-data';
-import { TaskForm } from 'components/TaskForm/TaskForm';
-import { TasksColumn } from 'components/TasksColumn/TasksColumn';
+import { Form } from 'components/Form/Form';
+import { Column } from 'components/Column/Column';
 import { Loader } from 'components/Loader/Loader';
+import AbcIcon from '@mui/icons-material/Abc';
 import './App.scss';
 
 const App = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [tasksLoading, setTasksLoading] = useState(true);
-  const [selectedTask, setSelectedTask] = useState<Task>();
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+
+  const handleChangeTaskStatus = (clickedTask: Task) => {
+    const statusAtIndex = taskStatusOrder.findIndex(
+      (status) => status === clickedTask.status
+    );
+
+    const changeStatusTo = taskStatusOrder[statusAtIndex + 1];
+    const date = new Date().toISOString();
+    const changeDescription = `Moved from ${clickedTask.status} to ${changeStatusTo}`;
+
+    console.log('date', date);
+    console.log('changeDescription', changeDescription);
+
+    setTasks((prevState) =>
+      prevState.map((task) => {
+        if (task.id === clickedTask.id) {
+          return {
+            ...task,
+            status: changeStatusTo,
+            history: [
+              ...task.history,
+              {
+                date,
+                changeDescription,
+              },
+            ],
+          };
+        }
+
+        return task;
+      })
+    );
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -21,15 +55,21 @@ const App = () => {
 
   return (
     <div className="app">
-      {tasksLoading && <Loader />}
-      <div className="tasks-table-container">
-        <div className="tasks-table">
-          <TasksColumn />
-          <TasksColumn />
-          <TasksColumn />
+      <Loader isOpen={tasksLoading} />
+      <div className="table-container">
+        <div className="table">
+          {taskStatusOrder.map((status: TaskStatus) => (
+            <Column
+              key={status}
+              columnType={status}
+              tasks={tasks}
+              onTaskClick={setSelectedTask}
+              onMoveTask={handleChangeTaskStatus}
+            />
+          ))}
         </div>
       </div>
-      <TaskForm />
+      <Form selectedTask={selectedTask} />
     </div>
   );
 };

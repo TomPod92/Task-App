@@ -1,7 +1,72 @@
-.app {
-    background: red;
+@import 'utils/mixins.scss';
 
-    & header {
-        color: green;
+:root {
+  --form-width: 250px;
+  --color-primary: rgb(81, 157, 158);
+  --color-secondary: rgb(88, 201, 185);
+  --color-tertiary: rgb(157, 200, 200);
+  --color-accent: rgb(209, 182, 225);
+  --color-white: rgb(245, 245, 245);
+  --color-gray: rgb(210, 210, 210);
+  --color-black: rgb(36, 36, 36);
+  --color-background: rgb(240, 240, 240);
+  --shadow-down: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-diagonal: 4px 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-left: -4px 0 8px rgba(0, 0, 0, 0.2);
+  --border-radius: 0.75rem;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: var(--color-background);
+}
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  // width: 100vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-container {
+  @include centerContent;
+  margin: 10rem var(--form-width) 5rem 0;
+  flex: 1;
+  border-radius: var(--border-radius);
+}
+
+.table {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  // width: calc(0.9 * (100vw - 200px));
+  // margin: 5rem auto 0 auto;
+  min-height: 50rem;
+  box-shadow: var(--shadow-diagonal);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+
+  & > .column {
+    border-left: 2px solid var(--color-gray);
+    border-right: 2px solid var(--color-gray);
+
+    &:first-of-type,
+    &:last-of-type {
+      border-left: none;
+      border-right: none;
     }
+  }
 }
