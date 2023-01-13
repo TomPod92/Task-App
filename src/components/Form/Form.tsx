@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
-
 import { Input } from 'components/Input/Input';
-import { TaskStatus, Task } from 'types';
+import { TaskStatus, Task, TaskPriority } from 'types';
 import './form.scss';
 import { useInput } from 'hooks/useInput';
+import { Button } from 'components/Button/Button';
+import { RadioButton } from 'components/RadioButton/RadioButton';
 
 interface Props {
   selectedTask: Task | null;
+  setSelectedTask: React.Dispatch<React.SetStateAction<Task | null>>;
+  onTaskCreate: (task: Task) => void;
 }
 
-export const Form = ({ selectedTask }: Props) => {
+export const Form = ({
+  selectedTask,
+  setSelectedTask,
+  onTaskCreate,
+}: Props) => {
   const {
     value: title,
     setValue: setTitle,
@@ -24,14 +31,51 @@ export const Form = ({ selectedTask }: Props) => {
     setError: setDescriptionError,
   } = useInput({ required: true });
 
+  const resetFormValues = () => {
+    setTitle('');
+    setTitleError(false);
+    setDescription('');
+    setDescriptionError(false);
+    setPriority(TaskPriority.Low);
+  };
+
+  const [priority, setPriority] = useState(TaskPriority.Low);
+
   const handleSave = (event: any) => {
     event?.preventDefault();
-    setTitleError(!title);
-    setDescriptionError(!description);
+
+    const titleValue = title.trim();
+    const descriptionValue = description.trim();
+
+    const hasErrors = !titleValue || !descriptionValue;
+
+    if (hasErrors) {
+      setTitleError(!titleValue);
+      setDescriptionError(!descriptionValue);
+      return;
+    }
+
+    const newTask: Task = {
+      id: crypto.randomUUID(),
+      title: titleValue,
+      description: descriptionValue,
+      priority: priority,
+      status: TaskStatus.Open,
+      history: [],
+    };
+    resetFormValues();
+    onTaskCreate(newTask);
   };
+
+  useEffect(() => {
+    console.log('selectedTask', selectedTask);
+  }, [selectedTask]);
 
   return (
     <form className="form" onSubmit={handleSave}>
+      <h2 className="form-title">
+        {selectedTask ? 'Edit task' : 'Create new task'}
+      </h2>
       <Input
         type="text"
         name="title"
@@ -52,7 +96,29 @@ export const Form = ({ selectedTask }: Props) => {
         errorMessage={'Description is invalid'}
       />
 
-      <button type="submit">Click</button>
+      <h3 className="form-subtitle">Task Priority</h3>
+      <RadioButton
+        name="priority"
+        value={TaskPriority.Low}
+        checked={priority === TaskPriority.Low}
+        onChange={setPriority}
+      />
+      <RadioButton
+        name="priority"
+        value={TaskPriority.Medium}
+        checked={priority === TaskPriority.Medium}
+        onChange={setPriority}
+      />
+      <RadioButton
+        name="priority"
+        value={TaskPriority.High}
+        checked={priority === TaskPriority.High}
+        onChange={setPriority}
+      />
+
+      <Button type="submit" className="form-submit-button">
+        {selectedTask ? 'Save' : 'Create'}
+      </Button>
     </form>
   );
 };

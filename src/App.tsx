@@ -46,11 +46,19 @@ const App = () => {
     );
   };
 
+  const handleCreateTask = (task: Task) => {
+    setTasksLoading(true);
+    setTimeout(() => {
+      setTasks((prev) => [...prev, task]);
+      setTasksLoading(false);
+    }, 2000);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setTasks(dummyTasksData);
       setTasksLoading(false);
-    }, 3000);
+    }, 2000);
   }, []);
 
   return (
@@ -69,7 +77,11 @@ const App = () => {
           ))}
         </div>
       </div>
-      <Form selectedTask={selectedTask} />
+      <Form
+        selectedTask={selectedTask}
+        setSelectedTask={setSelectedTask}
+        onTaskCreate={handleCreateTask}
+      />
     </div>
   );
 };

@@ -3,17 +3,29 @@ import './button.scss';
 
 interface Props {
   children: any;
-  onClick: (event: React.MouseEvent) => void;
+  onClick?: (event: React.MouseEvent) => void;
+  type?: 'button' | 'submit';
   disabled?: boolean;
   className?: string;
 }
 
-export const Button = ({ children, onClick, disabled, className }: Props) => {
+export const Button = ({
+  children,
+  onClick,
+  type = 'button',
+  disabled,
+  className,
+}: Props) => {
+  const handleClick = (event: React.MouseEvent) => {
+    onClick && onClick(event);
+  };
+
   return (
     <button
+      type={type}
       className={`button ${className}`}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
     </button>
