@@ -7,13 +7,13 @@ interface Options {
 export const useInput = ({ required }: Options) => {
   const [value, setValue] = useState('');
   const [touched, setTouched] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (touched && required && !value.trim().length) {
-      setError('Required value');
+      setError(true);
     } else {
-      setError('');
+      setError(false);
     }
   }, [required, value, touched]);
 

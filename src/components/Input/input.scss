@@ -1,22 +1,23 @@
-.text-input-inner-container {
+.input-inner-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
 }
 
-.text-input-inner-container {
+.input-inner-container {
   position: relative;
   padding: 0.75rem;
   border: 1px solid var(--color-primary);
   border-radius: var(--border-radius);
 }
 
-.text-input {
-  //   padding: 0.5rem;
+.input {
+  width: 100%;
   font-size: 1.5rem;
   border: none;
   background: var(--color-white);
+  resize: vertical;
 
   &:focus-visible,
   &:focus {
@@ -24,16 +25,20 @@
   }
 }
 
-.text-input-label {
+textarea.input {
+  min-height: 15rem;
+}
+
+.input-label {
   position: absolute;
-  top: 50%;
+  top: 15px;
   left: 5%;
   transform: translate(0, -50%);
   padding: 0 2px;
   font-size: 1.5rem;
   color: var(--color-black);
   background-color: var(--color-white);
-  transition: all 0.1s ease-in;
+  transition: all 0.2s ease-in;
 
   &-translated {
     font-size: 1rem;
@@ -42,17 +47,22 @@
   }
 }
 
-.text-input-error {
+.input-error {
+  margin-top: 3px;
   margin-left: 1rem;
   color: var(--color-danger);
+  opacity: 0;
+  transform: opacity 0.1s ease-in;
+
+  &-visible {
+    opacity: 1;
+  }
 }
 
-.input-error {
+.input-with-error {
+  border: 1px solid var(--color-danger);
+
   & label {
     color: var(--color-danger);
-  }
-
-  & .text-input-inner-container {
-    border: 1px solid var(--color-danger);
   }
 }
