@@ -1,21 +1,18 @@
 import { TaskItem } from 'components/TaskItem/TaskItem';
+import { useTask } from 'hooks/useTask';
 import { TaskStatus, Task } from 'types';
 import { sortAndFilterTasks } from 'utils/utils';
 import './column.scss';
 
 interface Props {
-  tasks: Task[];
   columnType: TaskStatus;
-  onTaskClick: React.Dispatch<React.SetStateAction<Task | null>>;
-  onMoveTask: (clickedTask: Task) => void;
 }
 
 export const Column = ({
-  tasks,
   columnType,
-  onTaskClick,
-  onMoveTask,
-}: Props) => {
+}: 
+Props) => {
+  const { tasks } = useTask();
   const filteredTasks = sortAndFilterTasks(tasks, columnType);
 
   return (
@@ -26,8 +23,6 @@ export const Column = ({
           <TaskItem
             key={task.id}
             task={task}
-            onTaskClick={onTaskClick}
-            onMoveTask={onMoveTask}
           />
         ))}
       </ul>

@@ -1,11 +1,11 @@
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import { useTask } from 'hooks/useTask';
 import './loader.scss';
-interface Props {
-  isOpen: boolean;
-}
 
-export const Loader = ({ isOpen }: Props) => {
-  if (!isOpen) {
+export const Loader = () => {
+  const { tasksLoading } = useTask();
+
+  if (!tasksLoading) {
     return null;
   }
 

@@ -1,24 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Input } from 'components/Input/Input';
-import { TaskStatus, Task, TaskPriority } from 'types';
-import './form.scss';
-// import { useInput } from 'hooks/useInput';
 import { Button } from 'components/Button/Button';
 import { RadioButton } from 'components/RadioButton/RadioButton';
 import { Modal } from 'components/Modal/Modal';
 import { TaskHistory } from 'components/TaskHistory/TaskHistory';
+import { TaskStatus, Task, TaskPriority } from 'types';
+import { useTask } from 'hooks/useTask';
+import './form.scss';
 
-interface Props {
-  selectedTask: Task | null;
-  setSelectedTask: React.Dispatch<React.SetStateAction<Task | null>>;
-  onTaskCreate: (task: Task) => void;
-}
+export const Form = () => {
+  const { selectedTask, setSelectedTask, createTask } = useTask();
 
-export const Form = ({
-  selectedTask,
-  setSelectedTask,
-  onTaskCreate,
-}: Props) => {
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState('');
   const [description, setDescription] = useState('');
@@ -66,7 +58,7 @@ export const Form = ({
     };
 
     resetForm();
-    onTaskCreate(newTask);
+    createTask(newTask);
   };
 
   const handleCancelModal = () => {
