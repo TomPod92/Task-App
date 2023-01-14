@@ -1,5 +1,6 @@
 import { TaskStatus, taskStatusOrder } from 'types';
 import { Column } from 'components/Column/Column';
+import './table.scss';
 
 export const Table = () => {
   return (

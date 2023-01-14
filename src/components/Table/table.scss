@@ -1,0 +1,29 @@
+@import 'utils/mixins.scss';
+
+.table-container {
+  @include centerContent;
+  margin: 10rem var(--form-width) 5rem 0;
+  flex: 1;
+  border-radius: var(--border-radius);
+}
+
+.table {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  min-height: 50rem;
+  box-shadow: var(--shadow-diagonal);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+
+  & > .column {
+    border-left: 2px solid var(--color-gray);
+    border-right: 2px solid var(--color-gray);
+
+    &:first-of-type,
+    &:last-of-type {
+      border-left: none;
+      border-right: none;
+    }
+  }
+}
