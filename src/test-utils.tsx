@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
-import AppProviders from 'providers/AppProviders';
+import { AppProviders } from 'providers/AppProviders';
 import * as userEvent from '@testing-library/user-event';
 
 const user = userEvent.default;

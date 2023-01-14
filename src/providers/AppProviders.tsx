@@ -1,9 +1,9 @@
+import { TaskProvider } from 'contexts/TaskContext';
+
 interface Props {
   children: React.ReactNode;
 }
 
-const AppProviders = ({ children }: Props) => {
-  return <>{children}</>;
+export const AppProviders = ({ children }: Props) => {
+  return <TaskProvider>{children}</TaskProvider>;
 };
-
-export default AppProviders;
