@@ -3,6 +3,7 @@ import './button.scss';
 
 interface Props {
   children: any;
+  version?: 'primary' | 'secondary';
   onClick?: (event: React.MouseEvent) => void;
   type?: 'button' | 'submit';
   disabled?: boolean;
@@ -11,6 +12,7 @@ interface Props {
 
 export const Button = ({
   children,
+  version = 'primary',
   onClick,
   type = 'button',
   disabled,
@@ -20,10 +22,12 @@ export const Button = ({
     onClick && onClick(event);
   };
 
+  const classString = `button button-${version} ${className}`;
+
   return (
     <button
       type={type}
-      className={`button ${className}`}
+      className={classString}
       disabled={disabled}
       onClick={handleClick}
     >

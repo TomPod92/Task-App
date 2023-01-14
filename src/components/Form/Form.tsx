@@ -17,29 +17,19 @@ export const Form = ({
   setSelectedTask,
   onTaskCreate,
 }: Props) => {
-  const {
-    value: title,
-    setValue: setTitle,
-    error: isTitleError,
-    setError: setTitleError,
-  } = useInput({ required: true });
+  const [title, setTitle] = useState('');
+  const [titleError, setTitleError] = useState('');
+  const [description, setDescription] = useState('');
+  const [descriptionError, setDescriptionError] = useState('');
+  const [priority, setPriority] = useState(TaskPriority.Low);
 
-  const {
-    value: description,
-    setValue: setDescription,
-    error: isDescriptionError,
-    setError: setDescriptionError,
-  } = useInput({ required: true });
-
-  const resetFormValues = () => {
+  const resetForm = () => {
     setTitle('');
-    setTitleError(false);
+    setTitleError('');
     setDescription('');
-    setDescriptionError(false);
+    setDescriptionError('');
     setPriority(TaskPriority.Low);
   };
-
-  const [priority, setPriority] = useState(TaskPriority.Low);
 
   const handleSave = (event: any) => {
     event?.preventDefault();
@@ -49,9 +39,15 @@ export const Form = ({
 
     const hasErrors = !titleValue || !descriptionValue;
 
+    if (!titleValue) {
+      setTitleError('Title is required');
+    }
+
+    if (!descriptionValue) {
+      setDescriptionError('Description is required');
+    }
+
     if (hasErrors) {
-      setTitleError(!titleValue);
-      setDescriptionError(!descriptionValue);
       return;
     }
 
@@ -63,12 +59,13 @@ export const Form = ({
       status: TaskStatus.Open,
       history: [],
     };
-    resetFormValues();
+
+    resetForm();
     onTaskCreate(newTask);
   };
 
   useEffect(() => {
-    console.log('selectedTask', selectedTask);
+    // console.log('selectedTask', selectedTask);
   }, [selectedTask]);
 
   return (
@@ -82,8 +79,8 @@ export const Form = ({
         label="Title"
         value={title}
         onChange={setTitle}
-        error={isTitleError}
-        errorMessage={'Title is invalid'}
+        error={titleError}
+        required
       />
 
       <Input
@@ -92,8 +89,8 @@ export const Form = ({
         label="Description"
         value={description}
         onChange={setDescription}
-        error={isDescriptionError}
-        errorMessage={'Description is invalid'}
+        error={descriptionError}
+        required
       />
 
       <h3 className="form-subtitle">Task Priority</h3>
@@ -115,10 +112,15 @@ export const Form = ({
         checked={priority === TaskPriority.High}
         onChange={setPriority}
       />
+      <div className="form-button-container">
+        <Button type="button" className="form-button">
+          Cancel
+        </Button>
 
-      <Button type="submit" className="form-submit-button">
-        {selectedTask ? 'Save' : 'Create'}
-      </Button>
+        <Button version="secondary" type="submit" className="form-button">
+          {selectedTask ? 'Save' : 'Create'}
+        </Button>
+      </div>
     </form>
   );
 };

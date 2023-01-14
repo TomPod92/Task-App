@@ -4,14 +4,28 @@
   @include centerContent;
   padding: 0.25em 0.5em;
   color: var(--color-primary);
-  border: 1px solid var(--color-primary);
   border-radius: var(--border-radius);
-  background-color: var(--color-white);
   cursor: pointer;
   transition: all 0.3s ease-in;
 
-  &:hover {
-    background-color: var(--color-primary);
+  &-primary {
+    border: 1px solid var(--color-primary);
+    background-color: var(--color-white);
+
+    &:hover {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+    }
+  }
+
+  &-secondary {
+    border: 2px solid var(--color-accent);
+    background-color: var(--color-accent);
     color: var(--color-white);
+
+    &:hover {
+      background-color: var(--color-white);
+      color: var(--color-black);
+    }
   }
 }

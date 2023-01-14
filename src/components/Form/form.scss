@@ -11,9 +11,14 @@
   box-shadow: var(--shadow-left);
   background-color: var(--color-white);
 
-  &-submit-button {
+  &-button-container {
     margin-top: auto;
     margin-bottom: 3rem;
+  }
+
+  &-button {
+    width: 100%;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
   }
 }
