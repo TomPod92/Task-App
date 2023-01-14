@@ -5,6 +5,7 @@ import './form.scss';
 import { useInput } from 'hooks/useInput';
 import { Button } from 'components/Button/Button';
 import { RadioButton } from 'components/RadioButton/RadioButton';
+import { Modal } from 'components/Modal/Modal';
 
 interface Props {
   selectedTask: Task | null;
@@ -22,6 +23,7 @@ export const Form = ({
   const [description, setDescription] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
   const [priority, setPriority] = useState(TaskPriority.Low);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const resetForm = () => {
     setTitle('');
@@ -29,6 +31,8 @@ export const Form = ({
     setDescription('');
     setDescriptionError('');
     setPriority(TaskPriority.Low);
+
+    !selectedTask && setSelectedTask(null);
   };
 
   const handleSave = (event: any) => {
@@ -64,9 +68,33 @@ export const Form = ({
     onTaskCreate(newTask);
   };
 
+  const handleCancelModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleConfirmModal = () => {
+    resetForm();
+    if (!selectedTask) {
+      return;
+    }
+
+    setTitle(selectedTask.title);
+    setDescription(selectedTask.description);
+    setPriority(selectedTask.priority);
+
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
+    console.log('selectedTask', selectedTask);
+    console.log('title', title);
+    console.log('description', description);
+    console.log('-----------');
+    if (selectedTask && (title || description)) {
+      setIsModalOpen(true);
+    }
     // console.log('selectedTask', selectedTask);
-  }, [selectedTask]);
+  }, [selectedTask, title, description]);
 
   return (
     <form className="form" onSubmit={handleSave}>
@@ -113,14 +141,26 @@ export const Form = ({
         onChange={setPriority}
       />
       <div className="form-button-container">
-        <Button type="button" className="form-button">
-          Cancel
+        <Button type="button" onClick={resetForm} className="form-button">
+          {selectedTask ? 'Cancel' : 'Clear'}
         </Button>
 
         <Button version="secondary" type="submit" className="form-button">
           {selectedTask ? 'Save' : 'Create'}
         </Button>
       </div>
+
+      <Modal
+        open={isModalOpen}
+        onCancel={handleCancelModal}
+        onConfirm={handleConfirmModal}
+        title="You have unsaved changes"
+      >
+        <p>
+          Are you sure you want to discard them and display selected task
+          information?
+        </p>
+      </Modal>
     </form>
   );
 };

@@ -22,8 +22,8 @@ const App = () => {
     const date = new Date().toISOString();
     const changeDescription = `Moved from ${clickedTask.status} to ${changeStatusTo}`;
 
-    console.log('date', date);
-    console.log('changeDescription', changeDescription);
+    // console.log('date', date);
+    // console.log('changeDescription', changeDescription);
 
     setTasks((prevState) =>
       prevState.map((task) => {
