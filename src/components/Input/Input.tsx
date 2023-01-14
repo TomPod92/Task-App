@@ -6,8 +6,8 @@ interface Props {
   label: string;
   value: string;
   onChange: React.Dispatch<React.SetStateAction<string>>;
-  error: boolean;
-  errorMessage: string;
+  error: string;
+  required?: boolean;
   disabled?: boolean;
   outerClassName?: string;
   innerClassName?: string;
@@ -20,7 +20,7 @@ export const Input = ({
   value,
   onChange,
   error,
-  errorMessage,
+  required,
   disabled,
   outerClassName,
   innerClassName,
@@ -47,6 +47,7 @@ export const Input = ({
           htmlFor={name}
           className={`input-label ${value ? 'input-label-translated' : ''}`}
         >
+          {required && '*'}
           {label}
         </label>
         {type === 'text' ? (
@@ -71,7 +72,7 @@ export const Input = ({
         )}
       </div>
       <p className={`input-error ${error ? 'input-error-visible' : ''}`}>
-        {errorMessage}
+        {error}
       </p>
     </div>
   );
