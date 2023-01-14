@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { Input } from 'components/Input/Input';
 import { TaskStatus, Task, TaskPriority } from 'types';
 import './form.scss';
-import { useInput } from 'hooks/useInput';
+// import { useInput } from 'hooks/useInput';
 import { Button } from 'components/Button/Button';
 import { RadioButton } from 'components/RadioButton/RadioButton';
 import { Modal } from 'components/Modal/Modal';
+import { TaskHistory } from 'components/TaskHistory/TaskHistory';
 
 interface Props {
   selectedTask: Task | null;
@@ -87,9 +88,9 @@ export const Form = ({
 
   useEffect(() => {
     console.log('selectedTask', selectedTask);
-    console.log('title', title);
-    console.log('description', description);
-    console.log('-----------');
+    // console.log('title', title);
+    // console.log('description', description);
+    // console.log('-----------');
     if (selectedTask && (title || description)) {
       setIsModalOpen(true);
     }
@@ -140,6 +141,9 @@ export const Form = ({
         checked={priority === TaskPriority.High}
         onChange={setPriority}
       />
+
+      <TaskHistory history={selectedTask?.history} />
+
       <div className="form-button-container">
         <Button type="button" onClick={resetForm} className="form-button">
           {selectedTask ? 'Cancel' : 'Clear'}

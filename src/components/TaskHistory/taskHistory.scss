@@ -1,0 +1,13 @@
+.task-history {
+  &-container {
+    margin: 2em 0;
+  }
+
+  &-list {
+    list-style: none;
+  }
+
+  &-entry {
+    font-size: 1.3rem;
+  }
+}
