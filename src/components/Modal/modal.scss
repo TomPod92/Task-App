@@ -11,13 +11,18 @@
 .modal {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 90%;
   min-height: 300px;
   padding: 2rem;
   background-color: var(--color-white);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-diagonal);
   transition: opacity 0.3s ease-in;
+
+  @media only screen and (min-width: 600px) {
+    width: 60%;
+    max-width: 50rem;
+  }
 
   &-open {
     opacity: 1;

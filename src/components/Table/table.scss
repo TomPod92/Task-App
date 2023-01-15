@@ -1,11 +1,16 @@
 .table {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 90%;
   min-height: 50rem;
   box-shadow: var(--shadow-diagonal);
   border-radius: var(--border-radius);
   overflow: hidden;
+
+  @media only screen and (min-width: 600px) {
+    flex-direction: row;
+  }
 
   & > .column {
     border-left: 2px solid var(--color-gray);

@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState, useEffect } from 'react';
-import { TaskStatus, Task, taskStatusOrder } from 'types';
+import { Task, taskStatusOrder } from 'types';
 import { dummyTasksData } from 'dummy-data';
+import { useNotification } from 'hooks/useNotification';
 
 interface TaskContextData {
   tasks: Task[];
@@ -8,9 +9,11 @@ interface TaskContextData {
   selectedTask: Task | null;
   isFormModalOpen: boolean;
   createTask: (task: Task) => void;
+  editTask: (task: Task) => void;
   changeTaskStatus: (task: Task) => void;
-  setSelectedTask: React.Dispatch<React.SetStateAction<Task | null>>;
+  handleSelectTaskToEdit: (task: Task) => void;
   toggleFormModal: () => void;
+  clearSelectedTask: () => void;
 }
 
 export const TaskContext = createContext<TaskContextData>({
@@ -19,9 +22,11 @@ export const TaskContext = createContext<TaskContextData>({
   selectedTask: null,
   isFormModalOpen: false,
   createTask: () => {},
+  editTask: () => {},
   changeTaskStatus: () => {},
-  setSelectedTask: () => {},
+  handleSelectTaskToEdit: () => {},
   toggleFormModal: () => {},
+  clearSelectedTask: () => {},
 });
 
 interface Props {
@@ -34,12 +39,37 @@ export const TaskProvider = ({ children }: Props) => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
 
+  const { successToast } = useNotification();
+
   const createTask = (task: Task) => {
     setTasksLoading(true);
     setTimeout(() => {
       setTasks((prev) => [...prev, task]);
       setTasksLoading(false);
     }, 2000);
+
+    successToast('Task created');
+    toggleFormModal();
+  };
+
+  const editTask = (taskToEdit: Task) => {
+    setTasksLoading(true);
+    const newTasks = tasks.map((task: Task) => {
+      if (task.id === taskToEdit.id) {
+        return taskToEdit;
+      } else {
+        return task;
+      }
+    });
+
+    setTimeout(() => {
+      setTasks(newTasks);
+      setTasksLoading(false);
+    }, 2000);
+
+    successToast('Task edited');
+    clearSelectedTask();
+    toggleFormModal();
   };
 
   const changeTaskStatus = (clickedTask: Task) => {
@@ -50,9 +80,6 @@ export const TaskProvider = ({ children }: Props) => {
     const changeStatusTo = taskStatusOrder[statusAtIndex + 1];
     const date = new Date().toISOString();
     const changeDescription = `Moved from ${clickedTask.status} to ${changeStatusTo}`;
-
-    // console.log('date', date);
-    // console.log('changeDescription', changeDescription);
 
     setTasks((prevState) =>
       prevState.map((task) => {
@@ -73,11 +100,21 @@ export const TaskProvider = ({ children }: Props) => {
         return task;
       })
     );
+
+    successToast('Task moved');
   };
 
   const toggleFormModal = () => {
-    console.log('click', isFormModalOpen);
     setIsFormModalOpen((p) => !p);
+  };
+
+  const handleSelectTaskToEdit = (task: Task) => {
+    setSelectedTask(task);
+    toggleFormModal();
+  };
+
+  const clearSelectedTask = () => {
+    setSelectedTask(null);
   };
 
   useEffect(() => {
@@ -95,9 +132,11 @@ export const TaskProvider = ({ children }: Props) => {
         selectedTask,
         isFormModalOpen,
         createTask,
+        editTask,
         changeTaskStatus,
-        setSelectedTask,
+        handleSelectTaskToEdit,
         toggleFormModal,
+        clearSelectedTask,
       }}
     >
       {children}

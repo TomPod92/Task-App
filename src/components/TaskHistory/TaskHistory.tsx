@@ -8,8 +8,6 @@ interface Props {
 }
 
 export const TaskHistory = ({ history, className }: Props) => {
-  // console.log('history', history);
-
   if (!history?.length) {
     return null;
   }
@@ -19,7 +17,7 @@ export const TaskHistory = ({ history, className }: Props) => {
       <h3>Task history</h3>
       <ul className="task-history-list">
         {history.map((entry) => (
-          <li className="task-history-entry">
+          <li className="task-history-entry" key={entry.date}>
             {entry.date}-{entry.changeDescription}
           </li>
         ))}

@@ -5,7 +5,7 @@ import './modal.scss';
 interface Props {
   children: any;
   open: boolean;
-  onOverlayClick: () => void;
+  confirmButtonText: string;
   onCancel: () => void;
   onConfirm: () => void;
   title?: string;
@@ -15,7 +15,7 @@ interface Props {
 export const Modal = ({
   children,
   open,
-  onOverlayClick,
+  confirmButtonText,
   onCancel,
   onConfirm,
   title,
@@ -31,7 +31,7 @@ export const Modal = ({
         'model-opened': open,
         'model-closed': !open,
       })}
-      onClick={onOverlayClick}
+      onClick={onCancel}
     >
       <div
         className={classNames('modal', className)}
@@ -45,8 +45,12 @@ export const Modal = ({
           <Button className="modal-cancel-button" onClick={onCancel}>
             Cancel
           </Button>
-          <Button className="modal-confirm-button" onClick={onConfirm}>
-            Confirm
+          <Button
+            className="modal-confirm-button"
+            variant="secondary"
+            onClick={onConfirm}
+          >
+            {confirmButtonText}
           </Button>
         </div>
       </div>

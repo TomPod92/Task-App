@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const TaskItem = ({ task, className }: Props) => {
-  const { changeTaskStatus, setSelectedTask } = useTask();
+  const { changeTaskStatus, handleSelectTaskToEdit } = useTask();
 
   const handleMoveClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -23,7 +23,7 @@ export const TaskItem = ({ task, className }: Props) => {
   return (
     <li
       className={classNames('task-item', className)}
-      onClick={() => setSelectedTask(task)}
+      onClick={() => handleSelectTaskToEdit(task)}
     >
       <div className="task-item-info">
         <PriorityIcon priority={task.priority} />

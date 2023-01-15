@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AppProviders } from 'providers/AppProviders';
 import { Form } from 'components/Form/Form';
 import { Loader } from 'components/Loader/Loader';
@@ -14,6 +16,7 @@ const App = () => {
         <Form />
         <FormModalButton />
       </AppProviders>
+      <ToastContainer />
     </div>
   );
 };

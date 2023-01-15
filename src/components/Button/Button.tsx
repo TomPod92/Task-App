@@ -3,7 +3,7 @@ import './button.scss';
 
 interface Props {
   children: any;
-  version?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary';
   onClick?: (event: React.MouseEvent) => void;
   type?: 'button' | 'submit';
   disabled?: boolean;
@@ -12,7 +12,7 @@ interface Props {
 
 export const Button = ({
   children,
-  version = 'primary',
+  variant = 'primary',
   onClick,
   type = 'button',
   disabled,
@@ -26,8 +26,8 @@ export const Button = ({
     <button
       type={type}
       className={classNames('button', className, {
-        'button-primary': version === 'primary',
-        'button-secondary': version === 'secondary',
+        'button-primary': variant === 'primary',
+        'button-secondary': variant === 'secondary',
       })}
       disabled={disabled}
       onClick={handleClick}

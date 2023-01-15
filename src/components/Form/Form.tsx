@@ -17,9 +17,10 @@ export const Form = ({ className }: Props) => {
   const {
     selectedTask,
     isFormModalOpen,
-    setSelectedTask,
     createTask,
+    editTask,
     toggleFormModal,
+    clearSelectedTask,
   } = useTask();
 
   const [title, setTitle] = useState('');
@@ -27,7 +28,6 @@ export const Form = ({ className }: Props) => {
   const [description, setDescription] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
   const [priority, setPriority] = useState(TaskPriority.Low);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const resetForm = () => {
     setTitle('');
@@ -35,13 +35,9 @@ export const Form = ({ className }: Props) => {
     setDescription('');
     setDescriptionError('');
     setPriority(TaskPriority.Low);
-
-    !selectedTask && setSelectedTask(null);
   };
 
-  const handleSave = (event: any) => {
-    event?.preventDefault();
-
+  const handleConfirmClick = () => {
     const titleValue = title.trim();
     const descriptionValue = description.trim();
 
@@ -59,58 +55,51 @@ export const Form = ({ className }: Props) => {
       return;
     }
 
+    const now = new Date().toISOString();
+
     const newTask: Task = {
-      id: crypto.randomUUID(),
+      id: selectedTask ? selectedTask.id : crypto.randomUUID(),
       title: titleValue,
       description: descriptionValue,
       priority: priority,
       status: TaskStatus.Open,
-      history: [],
+      history: selectedTask
+        ? selectedTask.history
+        : [{ date: now, changeDescription: 'Task created' }],
     };
 
-    resetForm();
-    createTask(newTask);
-  };
-
-  const handleCancelModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleConfirmModal = () => {
-    // resetForm();
-    if (!selectedTask) {
-      return;
+    if (selectedTask) {
+      editTask(newTask);
+    } else {
+      createTask(newTask);
     }
+  };
 
-    setTitle(selectedTask.title);
-    setDescription(selectedTask.description);
-    setPriority(selectedTask.priority);
-
-    setSelectedTask(null);
-
-    setIsModalOpen(false);
+  const handleCancelClick = () => {
+    clearSelectedTask();
+    resetForm();
+    toggleFormModal();
   };
 
   useEffect(() => {
-    // console.log('selectedTask', selectedTask);
-    // console.log('title', title);
-    // console.log('description', description);
-    // console.log('-----------');
-    if (selectedTask && (title || description)) {
-      setIsModalOpen(true);
+    console.log('selectedTask', selectedTask);
+    if (selectedTask) {
+      console.log('wchodze');
+      setTitle(selectedTask.title);
+      setDescription(selectedTask.description);
+      setPriority(selectedTask.priority);
     }
-    // console.log('selectedTask', selectedTask);
-  }, [selectedTask, title, description]);
+  }, [selectedTask]);
 
   return (
     <Modal
       open={isFormModalOpen}
-      onOverlayClick={toggleFormModal}
-      onCancel={handleCancelModal}
-      onConfirm={handleConfirmModal}
+      onCancel={handleCancelClick}
+      onConfirm={handleConfirmClick}
       title={selectedTask ? 'Edit task' : 'Create Task'}
+      confirmButtonText={selectedTask ? 'Save changes' : 'Create'}
     >
-      <form className={classNames('form', className)} onSubmit={handleSave}>
+      <form className={classNames('form', className)}>
         <Input
           type="text"
           name="title"
