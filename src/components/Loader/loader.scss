@@ -14,7 +14,7 @@
   position: absolute;
   inset: 0;
   backdrop-filter: blur(3px);
-  z-index: 5;
+  z-index: 10;
 
   &-icon > svg {
     animation: rotate 1s infinite;

@@ -5,6 +5,7 @@
   inset: 0;
   backdrop-filter: blur(3px);
   @include centerContent;
+  z-index: 10;
 }
 
 .modal {
@@ -42,6 +43,9 @@
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--color-primary);
 
     & button {
       font-size: 1.75rem;

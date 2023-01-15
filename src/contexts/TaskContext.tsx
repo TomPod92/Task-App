@@ -6,18 +6,22 @@ interface TaskContextData {
   tasks: Task[];
   tasksLoading: boolean;
   selectedTask: Task | null;
+  isFormModalOpen: boolean;
   createTask: (task: Task) => void;
   changeTaskStatus: (task: Task) => void;
   setSelectedTask: React.Dispatch<React.SetStateAction<Task | null>>;
+  toggleFormModal: () => void;
 }
 
 export const TaskContext = createContext<TaskContextData>({
   tasks: [],
   tasksLoading: true,
   selectedTask: null,
+  isFormModalOpen: false,
   createTask: () => {},
   changeTaskStatus: () => {},
   setSelectedTask: () => {},
+  toggleFormModal: () => {},
 });
 
 interface Props {
@@ -28,6 +32,7 @@ export const TaskProvider = ({ children }: Props) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [tasksLoading, setTasksLoading] = useState(true);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
 
   const createTask = (task: Task) => {
     setTasksLoading(true);
@@ -70,6 +75,11 @@ export const TaskProvider = ({ children }: Props) => {
     );
   };
 
+  const toggleFormModal = () => {
+    console.log('click', isFormModalOpen);
+    setIsFormModalOpen((p) => !p);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setTasks(dummyTasksData);
@@ -83,9 +93,11 @@ export const TaskProvider = ({ children }: Props) => {
         tasks,
         tasksLoading,
         selectedTask,
+        isFormModalOpen,
         createTask,
         changeTaskStatus,
         setSelectedTask,
+        toggleFormModal,
       }}
     >
       {children}

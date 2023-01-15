@@ -9,6 +9,7 @@ interface Props {
 
 export const TaskHistory = ({ history, className }: Props) => {
   // console.log('history', history);
+
   if (!history?.length) {
     return null;
   }

@@ -9,12 +9,10 @@ interface Props {
 
 export const Table = ({ className }: Props) => {
   return (
-    <div className="table-container">
-      <div className={classNames('table', className)}>
-        {taskStatusOrder.map((status: TaskStatus) => (
-          <Column key={status} columnType={status} />
-        ))}
-      </div>
+    <div className={classNames('table', className)}>
+      {taskStatusOrder.map((status: TaskStatus) => (
+        <Column key={status} columnType={status} />
+      ))}
     </div>
   );
 };

@@ -5,6 +5,7 @@ import './modal.scss';
 interface Props {
   children: any;
   open: boolean;
+  onOverlayClick: () => void;
   onCancel: () => void;
   onConfirm: () => void;
   title?: string;
@@ -14,6 +15,7 @@ interface Props {
 export const Modal = ({
   children,
   open,
+  onOverlayClick,
   onCancel,
   onConfirm,
   title,
@@ -29,8 +31,14 @@ export const Modal = ({
         'model-opened': open,
         'model-closed': !open,
       })}
+      onClick={onOverlayClick}
     >
-      <div className={classNames('modal', className)}>
+      <div
+        className={classNames('modal', className)}
+        onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+          e.stopPropagation()
+        }
+      >
         {title && <h2 className="modal-title">{title}</h2>}
         <div className="modal-content">{children}</div>
         <div className="modal-buttons-container">

@@ -14,9 +14,14 @@ interface Props {
 }
 
 export const Form = ({ className }: Props) => {
-  const { selectedTask, setSelectedTask, createTask } = useTask();
+  const {
+    selectedTask,
+    isFormModalOpen,
+    setSelectedTask,
+    createTask,
+    toggleFormModal,
+  } = useTask();
 
-  const [id, setId] = useState('');
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState('');
   const [description, setDescription] = useState('');
@@ -25,7 +30,6 @@ export const Form = ({ className }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const resetForm = () => {
-    setId('');
     setTitle('');
     setTitleError('');
     setDescription('');
@@ -78,7 +82,6 @@ export const Form = ({ className }: Props) => {
       return;
     }
 
-    setId(selectedTask.id);
     setTitle(selectedTask.title);
     setDescription(selectedTask.description);
     setPriority(selectedTask.priority);
@@ -89,10 +92,10 @@ export const Form = ({ className }: Props) => {
   };
 
   useEffect(() => {
-    console.log('selectedTask', selectedTask);
-    console.log('title', title);
-    console.log('description', description);
-    console.log('-----------');
+    // console.log('selectedTask', selectedTask);
+    // console.log('title', title);
+    // console.log('description', description);
+    // console.log('-----------');
     if (selectedTask && (title || description)) {
       setIsModalOpen(true);
     }
@@ -100,75 +103,61 @@ export const Form = ({ className }: Props) => {
   }, [selectedTask, title, description]);
 
   return (
-    <form className={classNames('form', className)} onSubmit={handleSave}>
-      <h2 className="form-title">
-        {selectedTask ? 'Edit task' : 'Create new task'}
-      </h2>
-      <Input
-        type="text"
-        name="title"
-        label="Title"
-        value={title}
-        onChange={setTitle}
-        error={titleError}
-        required
-      />
+    <Modal
+      open={isFormModalOpen}
+      onOverlayClick={toggleFormModal}
+      onCancel={handleCancelModal}
+      onConfirm={handleConfirmModal}
+      title={selectedTask ? 'Edit task' : 'Create Task'}
+    >
+      <form className={classNames('form', className)} onSubmit={handleSave}>
+        <Input
+          type="text"
+          name="title"
+          label="Title"
+          value={title}
+          onChange={setTitle}
+          error={titleError}
+          required
+        />
 
-      <Input
-        type="textarea"
-        name="description"
-        label="Description"
-        value={description}
-        onChange={setDescription}
-        error={descriptionError}
-        required
-      />
+        <Input
+          type="textarea"
+          name="description"
+          label="Description"
+          value={description}
+          onChange={setDescription}
+          error={descriptionError}
+          required
+        />
 
-      <h3 className="form-subtitle">Task Priority</h3>
-      <RadioButton
-        name="priority"
-        label="Low"
-        value={TaskPriority.Low}
-        checked={priority === TaskPriority.Low}
-        onChange={setPriority}
-      />
-      <RadioButton
-        name="priority"
-        label="Medium"
-        value={TaskPriority.Medium}
-        checked={priority === TaskPriority.Medium}
-        onChange={setPriority}
-      />
-      <RadioButton
-        name="priority"
-        label="High"
-        value={TaskPriority.High}
-        checked={priority === TaskPriority.High}
-        onChange={setPriority}
-      />
+        <h3 className="form-subtitle">Task Priority</h3>
+        <div className="form-priority-container">
+          <RadioButton
+            name="priority"
+            label="Low"
+            value={TaskPriority.Low}
+            checked={priority === TaskPriority.Low}
+            onChange={setPriority}
+          />
+          <RadioButton
+            name="priority"
+            label="Medium"
+            value={TaskPriority.Medium}
+            checked={priority === TaskPriority.Medium}
+            onChange={setPriority}
+          />
+          <RadioButton
+            name="priority"
+            label="High"
+            value={TaskPriority.High}
+            checked={priority === TaskPriority.High}
+            onChange={setPriority}
+          />
+        </div>
 
-      <TaskHistory history={selectedTask?.history} />
-
-      <div className="form-button-container">
-        <Button version="secondary" type="submit" className="form-button">
-          {id ? 'Save' : 'Create'}
-        </Button>
-        <Button type="button" onClick={resetForm} className="form-button">
-          {id ? 'Cancel' : 'Clear'}
-        </Button>
-      </div>
-
-      <Modal
-        open={isModalOpen}
-        onCancel={handleCancelModal}
-        onConfirm={handleConfirmModal}
-        title="You have unsaved changes"
-      >
-        <p>
-          Are you sure you want to discard them and display selected task
-          information?
-        </p>
-      </Modal>
-    </form>
+        <TaskHistory history={selectedTask?.history} />
+      </form>
+    </Modal>
   );
 };
