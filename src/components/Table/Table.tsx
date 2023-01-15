@@ -1,11 +1,16 @@
+import classNames from 'classnames';
 import { TaskStatus, taskStatusOrder } from 'types';
 import { Column } from 'components/Column/Column';
 import './table.scss';
 
-export const Table = () => {
+interface Props {
+  className?: string;
+}
+
+export const Table = ({ className }: Props) => {
   return (
     <div className="table-container">
-      <div className="table">
+      <div className={classNames('table', className)}>
         {taskStatusOrder.map((status: TaskStatus) => (
           <Column key={status} columnType={status} />
         ))}

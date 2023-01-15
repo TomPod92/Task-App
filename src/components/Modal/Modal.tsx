@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Button } from 'components/Button/Button';
 import './modal.scss';
 
@@ -24,9 +25,12 @@ export const Modal = ({
 
   return (
     <div
-      className={`modal-container ${open ? 'model-opened' : 'modal-closed'}`}
+      className={classNames('modal-container', {
+        'model-opened': open,
+        'model-closed': !open,
+      })}
     >
-      <div className={`modal ${className ?? ''}`}>
+      <div className={classNames('modal', className)}>
         {title && <h2 className="modal-title">{title}</h2>}
         <div className="modal-content">{children}</div>
         <div className="modal-buttons-container">

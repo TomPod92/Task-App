@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Button } from 'components/Button/Button';
 import { PriorityIcon } from 'components/PriorityIcon/PriorityIcon';
 import { TaskPriority } from 'types';
@@ -25,7 +26,7 @@ export const RadioButton = ({
   };
 
   return (
-    <div className={`radio-button ${className ? className : ''}`}>
+    <div className={classNames('radio-button', className)}>
       <input
         type="radio"
         value={value}

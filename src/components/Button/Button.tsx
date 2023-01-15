@@ -1,4 +1,4 @@
-import React from 'react';
+import classNames from 'classnames';
 import './button.scss';
 
 interface Props {
@@ -22,12 +22,13 @@ export const Button = ({
     onClick && onClick(event);
   };
 
-  const classString = `button button-${version} ${className}`;
-
   return (
     <button
       type={type}
-      className={classString}
+      className={classNames('button', className, {
+        'button-primary': version === 'primary',
+        'button-secondary': version === 'secondary',
+      })}
       disabled={disabled}
       onClick={handleClick}
     >

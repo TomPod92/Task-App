@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { Button } from 'components/Button/Button';
@@ -8,9 +9,10 @@ import './taskItem.scss';
 
 interface Props {
   task: TaskType;
+  className?: string;
 }
 
-export const TaskItem = ({ task }: Props) => {
+export const TaskItem = ({ task, className }: Props) => {
   const { changeTaskStatus, setSelectedTask } = useTask();
 
   const handleMoveClick = (event: React.MouseEvent) => {
@@ -19,7 +21,10 @@ export const TaskItem = ({ task }: Props) => {
   };
 
   return (
-    <li className="task-item" onClick={() => setSelectedTask(task)}>
+    <li
+      className={classNames('task-item', className)}
+      onClick={() => setSelectedTask(task)}
+    >
       <div className="task-item-info">
         <PriorityIcon priority={task.priority} />
         <p className="task-item-text">{task.title}</p>

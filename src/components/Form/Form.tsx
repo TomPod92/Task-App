@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useState, useEffect } from 'react';
 import { Input } from 'components/Input/Input';
 import { Button } from 'components/Button/Button';
@@ -8,7 +9,11 @@ import { TaskStatus, Task, TaskPriority } from 'types';
 import { useTask } from 'hooks/useTask';
 import './form.scss';
 
-export const Form = () => {
+interface Props {
+  className?: string;
+}
+
+export const Form = ({ className }: Props) => {
   const { selectedTask, setSelectedTask, createTask } = useTask();
 
   const [id, setId] = useState('');
@@ -95,7 +100,7 @@ export const Form = () => {
   }, [selectedTask, title, description]);
 
   return (
-    <form className="form" onSubmit={handleSave}>
+    <form className={classNames('form', className)} onSubmit={handleSave}>
       <h2 className="form-title">
         {selectedTask ? 'Edit task' : 'Create new task'}
       </h2>

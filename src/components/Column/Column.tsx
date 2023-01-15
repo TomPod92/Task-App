@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { TaskItem } from 'components/TaskItem/TaskItem';
 import { useTask } from 'hooks/useTask';
 import { TaskStatus, Task } from 'types';
@@ -6,16 +7,15 @@ import './column.scss';
 
 interface Props {
   columnType: TaskStatus;
+  className?: string;
 }
 
-export const Column = ({ columnType }: Props) => {
+export const Column = ({ columnType, className }: Props) => {
   const { tasks } = useTask();
   const filteredTasks = sortAndFilterTasks(tasks, columnType);
 
-  // console.log('filteredTasks', filteredTasks);
-
   return (
-    <div className="column">
+    <div className={classNames('column', className)}>
       <h2 className="column-title">{columnType}</h2>
       <ul className="task-list">
         {filteredTasks.map((task: Task) => (

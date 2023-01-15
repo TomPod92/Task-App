@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import './input.scss';
 
 interface Props {
@@ -25,14 +26,6 @@ export const Input = ({
   outerClassName,
   innerClassName,
 }: Props) => {
-  const outerClass = `input-outer-container ${
-    outerClassName ? outerClassName : ''
-  }`;
-
-  const innerClass = `input-inner-container ${innerClassName} ${
-    error ? 'input-with-error' : ''
-  }`;
-
   const handleChange = (
     event:
       | React.ChangeEvent<HTMLInputElement>
@@ -40,9 +33,14 @@ export const Input = ({
   ) => {
     onChange(event.target.value);
   };
+
   return (
-    <div className={outerClass}>
-      <div className={innerClass}>
+    <div className={classNames('input-outer-container', outerClassName)}>
+      <div
+        className={classNames('input-inner-container', innerClassName, {
+          'input-with-error': error,
+        })}
+      >
         <label
           htmlFor={name}
           className={`input-label ${value ? 'input-label-translated' : ''}`}
