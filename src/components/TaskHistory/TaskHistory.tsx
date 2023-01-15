@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const TaskHistory = ({ history }: Props) => {
-  console.log('history', history);
+  // console.log('history', history);
   if (!history?.length) {
     return null;
   }

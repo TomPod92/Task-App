@@ -1,9 +1,7 @@
 import { Task, TaskStatus } from 'types';
 
 export const sortAndFilterTasks = (tasks: Task[], status: TaskStatus) => {
-  return (
-    tasks
-      // .sort((task: Task) => task.priority - task.priority)
-      .filter((task: Task) => task.status === status)
-  );
+  return tasks
+    .sort((a: Task, b: Task) => b.priority - a.priority)
+    .filter((task: Task) => task.status === status);
 };

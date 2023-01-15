@@ -1,5 +1,7 @@
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { Button } from 'components/Button/Button';
+import { PriorityIcon } from 'components/PriorityIcon/PriorityIcon';
 import { Task as TaskType, taskStatusOrder } from 'types';
 import { useTask } from 'hooks/useTask';
 import './taskItem.scss';
@@ -18,7 +20,11 @@ export const TaskItem = ({ task }: Props) => {
 
   return (
     <li className="task-item" onClick={() => setSelectedTask(task)}>
-      <p className="task-item-text">{task.title}</p>
+      <div className="task-item-info">
+        <PriorityIcon priority={task.priority} />
+        <p className="task-item-text">{task.title}</p>
+      </div>
+
       {task.status !== taskStatusOrder[taskStatusOrder.length - 1] && (
         <Button onClick={handleMoveClick}>
           <KeyboardDoubleArrowRightIcon />

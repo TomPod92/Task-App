@@ -11,6 +11,7 @@ import './form.scss';
 export const Form = () => {
   const { selectedTask, setSelectedTask, createTask } = useTask();
 
+  const [id, setId] = useState('');
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState('');
   const [description, setDescription] = useState('');
@@ -19,6 +20,7 @@ export const Form = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const resetForm = () => {
+    setId('');
     setTitle('');
     setTitleError('');
     setDescription('');
@@ -66,23 +68,26 @@ export const Form = () => {
   };
 
   const handleConfirmModal = () => {
-    resetForm();
+    // resetForm();
     if (!selectedTask) {
       return;
     }
 
+    setId(selectedTask.id);
     setTitle(selectedTask.title);
     setDescription(selectedTask.description);
     setPriority(selectedTask.priority);
+
+    setSelectedTask(null);
 
     setIsModalOpen(false);
   };
 
   useEffect(() => {
     console.log('selectedTask', selectedTask);
-    // console.log('title', title);
-    // console.log('description', description);
-    // console.log('-----------');
+    console.log('title', title);
+    console.log('description', description);
+    console.log('-----------');
     if (selectedTask && (title || description)) {
       setIsModalOpen(true);
     }
@@ -117,18 +122,21 @@ export const Form = () => {
       <h3 className="form-subtitle">Task Priority</h3>
       <RadioButton
         name="priority"
+        label="Low"
         value={TaskPriority.Low}
         checked={priority === TaskPriority.Low}
         onChange={setPriority}
       />
       <RadioButton
         name="priority"
+        label="Medium"
         value={TaskPriority.Medium}
         checked={priority === TaskPriority.Medium}
         onChange={setPriority}
       />
       <RadioButton
         name="priority"
+        label="High"
         value={TaskPriority.High}
         checked={priority === TaskPriority.High}
         onChange={setPriority}
@@ -137,12 +145,11 @@ export const Form = () => {
       <TaskHistory history={selectedTask?.history} />
 
       <div className="form-button-container">
-        <Button type="button" onClick={resetForm} className="form-button">
-          {selectedTask ? 'Cancel' : 'Clear'}
-        </Button>
-
         <Button version="secondary" type="submit" className="form-button">
-          {selectedTask ? 'Save' : 'Create'}
+          {id ? 'Save' : 'Create'}
+        </Button>
+        <Button type="button" onClick={resetForm} className="form-button">
+          {id ? 'Cancel' : 'Clear'}
         </Button>
       </div>
 

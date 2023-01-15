@@ -1,9 +1,11 @@
 import { Button } from 'components/Button/Button';
+import { PriorityIcon } from 'components/PriorityIcon/PriorityIcon';
 import { TaskPriority } from 'types';
 import './radioButton.scss';
 
 interface Props {
   name: string;
+  label: string;
   value: TaskPriority;
   checked: boolean;
   onChange: React.Dispatch<React.SetStateAction<TaskPriority>>;
@@ -12,6 +14,7 @@ interface Props {
 
 export const RadioButton = ({
   name,
+  label,
   value,
   checked,
   onChange,
@@ -31,7 +34,8 @@ export const RadioButton = ({
         onChange={handleChange}
       />
       <Button className={checked ? 'checked' : ''} onClick={handleChange}>
-        {value}
+        {label}
+        {/* <PriorityIcon priority={TaskPriority[label]} /> */}
       </Button>
     </div>
   );

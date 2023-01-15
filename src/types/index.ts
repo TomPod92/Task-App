@@ -11,9 +11,9 @@ export const taskStatusOrder = [
 ];
 
 export enum TaskPriority {
-  Low = 'low',
-  Medium = 'medium',
-  High = 'high',
+  Low,
+  Medium,
+  High,
 }
 
 export interface HistoryEntry {
