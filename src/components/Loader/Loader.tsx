@@ -1,9 +1,9 @@
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { useTask } from 'hooks/useTask';
+import { useTasks } from 'hooks/useTasks';
 import './loader.scss';
 
 export const Loader = () => {
-  const { tasksLoading } = useTask();
+  const { tasksLoading } = useTasks();
 
   if (!tasksLoading) {
     return null;

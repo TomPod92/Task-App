@@ -17,7 +17,7 @@ export enum TaskPriority {
 }
 
 export interface HistoryEntry {
-  date: string;
+  date: Date;
   changeDescription: string;
 }
 

@@ -48,15 +48,26 @@ export const TaskProvider = ({ children }: Props) => {
       setTasksLoading(false);
     }, 2000);
 
+    clearSelectedTask();
     successToast('Task created');
     toggleFormModal();
   };
 
   const editTask = (taskToEdit: Task) => {
     setTasksLoading(true);
+
     const newTasks = tasks.map((task: Task) => {
       if (task.id === taskToEdit.id) {
-        return taskToEdit;
+        return {
+          ...taskToEdit,
+          history: [
+            ...taskToEdit.history,
+            {
+              date: new Date(),
+              changeDescription: 'Task edited',
+            },
+          ],
+        };
       } else {
         return task;
       }
@@ -77,16 +88,16 @@ export const TaskProvider = ({ children }: Props) => {
       (status) => status === clickedTask.status
     );
 
-    const changeStatusTo = taskStatusOrder[statusAtIndex + 1];
-    const date = new Date().toISOString();
-    const changeDescription = `Moved from ${clickedTask.status} to ${changeStatusTo}`;
+    const newStatus = taskStatusOrder[statusAtIndex + 1];
+    const date = new Date();
+    const changeDescription = `Moved from ${clickedTask.status} to ${newStatus}`;
 
     setTasks((prevState) =>
       prevState.map((task) => {
         if (task.id === clickedTask.id) {
           return {
             ...task,
-            status: changeStatusTo,
+            status: newStatus,
             history: [
               ...task.history,
               {
@@ -101,7 +112,7 @@ export const TaskProvider = ({ children }: Props) => {
       })
     );
 
-    successToast('Task moved');
+    successToast('Task status changed');
   };
 
   const toggleFormModal = () => {

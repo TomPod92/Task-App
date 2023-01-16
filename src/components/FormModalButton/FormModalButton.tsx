@@ -1,10 +1,10 @@
 import AddIcon from '@mui/icons-material/Add';
-import { useTask } from 'hooks/useTask';
+import { useTasks } from 'hooks/useTasks';
 import { Button } from 'components/Button/Button';
 import './formModalButton.scss';
 
 export const FormModalButton = () => {
-  const { toggleFormModal } = useTask();
+  const { toggleFormModal } = useTasks();
   return (
     <Button className="form-modal-button" onClick={toggleFormModal}>
       <AddIcon />

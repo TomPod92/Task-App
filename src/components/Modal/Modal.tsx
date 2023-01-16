@@ -3,8 +3,8 @@ import { Button } from 'components/Button/Button';
 import './modal.scss';
 
 interface Props {
-  children: any;
-  open: boolean;
+  children: React.ReactNode;
+  isOpen: boolean;
   confirmButtonText: string;
   onCancel: () => void;
   onConfirm: () => void;
@@ -14,22 +14,22 @@ interface Props {
 
 export const Modal = ({
   children,
-  open,
+  isOpen,
   confirmButtonText,
   onCancel,
   onConfirm,
   title,
   className,
 }: Props) => {
-  if (!open) {
+  if (!isOpen) {
     return null;
   }
 
   return (
     <div
       className={classNames('modal-container', {
-        'model-opened': open,
-        'model-closed': !open,
+        'model-opened': isOpen,
+        'model-closed': !isOpen,
       })}
       onClick={onCancel}
     >

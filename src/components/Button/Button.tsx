@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import './button.scss';
 
 interface Props {
-  children: any;
+  children: React.ReactNode | string;
   variant?: 'primary' | 'secondary';
   onClick?: (event: React.MouseEvent) => void;
   type?: 'button' | 'submit';

@@ -1,24 +1,26 @@
 import classNames from 'classnames';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { Button } from 'components/Button/Button';
 import { PriorityIcon } from 'components/PriorityIcon/PriorityIcon';
 import { Task as TaskType, taskStatusOrder } from 'types';
-import { useTask } from 'hooks/useTask';
-import './taskItem.scss';
+import { useTasks } from 'hooks/useTasks';
+import './task.scss';
 
 interface Props {
   task: TaskType;
   className?: string;
 }
 
-export const TaskItem = ({ task, className }: Props) => {
-  const { changeTaskStatus, handleSelectTaskToEdit } = useTask();
+export const Task = ({ task, className }: Props) => {
+  const { changeTaskStatus, handleSelectTaskToEdit } = useTasks();
 
   const handleMoveClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     changeTaskStatus(task);
   };
+
+  const showChangeStatusButton =
+    task.status !== taskStatusOrder[taskStatusOrder.length - 1];
 
   return (
     <li
@@ -30,7 +32,7 @@ export const TaskItem = ({ task, className }: Props) => {
         <p className="task-item-text">{task.title}</p>
       </div>
 
-      {task.status !== taskStatusOrder[taskStatusOrder.length - 1] && (
+      {showChangeStatusButton && (
         <Button onClick={handleMoveClick}>
           <KeyboardDoubleArrowRightIcon />
         </Button>

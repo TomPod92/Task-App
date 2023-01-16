@@ -8,6 +8,8 @@ interface Props {
 }
 
 export const TaskHistory = ({ history, className }: Props) => {
+  const intlF = new Intl.DateTimeFormat('en-EN', { dateStyle: 'full' });
+
   if (!history?.length) {
     return null;
   }
@@ -17,8 +19,8 @@ export const TaskHistory = ({ history, className }: Props) => {
       <h3>Task history</h3>
       <ul className="task-history-list">
         {history.map((entry) => (
-          <li className="task-history-entry" key={entry.date}>
-            {entry.date}-{entry.changeDescription}
+          <li className="task-history-entry" key={entry.date.toISOString()}>
+            {intlF.format(entry.date)}-{entry.changeDescription}
           </li>
         ))}
       </ul>

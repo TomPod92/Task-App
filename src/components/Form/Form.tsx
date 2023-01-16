@@ -1,12 +1,11 @@
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
 import { Input } from 'components/Input/Input';
-import { Button } from 'components/Button/Button';
 import { RadioButton } from 'components/RadioButton/RadioButton';
 import { Modal } from 'components/Modal/Modal';
 import { TaskHistory } from 'components/TaskHistory/TaskHistory';
 import { TaskStatus, Task, TaskPriority } from 'types';
-import { useTask } from 'hooks/useTask';
+import { useTasks } from 'hooks/useTasks';
 import './form.scss';
 
 interface Props {
@@ -21,7 +20,7 @@ export const Form = ({ className }: Props) => {
     editTask,
     toggleFormModal,
     clearSelectedTask,
-  } = useTask();
+  } = useTasks();
 
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState('');
@@ -37,7 +36,7 @@ export const Form = ({ className }: Props) => {
     setPriority(TaskPriority.Low);
   };
 
-  const handleConfirmClick = () => {
+  const validateForm = () => {
     const titleValue = title.trim();
     const descriptionValue = description.trim();
 
@@ -51,21 +50,25 @@ export const Form = ({ className }: Props) => {
       setDescriptionError('Description is required');
     }
 
-    if (hasErrors) {
+    return hasErrors;
+  };
+
+  const handleConfirmClick = () => {
+    if (validateForm()) {
       return;
     }
 
-    const now = new Date().toISOString();
+    const now = new Date();
 
     const newTask: Task = {
-      id: selectedTask ? selectedTask.id : crypto.randomUUID(),
-      title: titleValue,
-      description: descriptionValue,
+      id: selectedTask?.id ?? crypto.randomUUID(),
+      title: title.trim(),
+      description: description.trim(),
       priority: priority,
-      status: TaskStatus.Open,
-      history: selectedTask
-        ? selectedTask.history
-        : [{ date: now, changeDescription: 'Task created' }],
+      status: selectedTask?.status ?? TaskStatus.Open,
+      history: selectedTask?.history ?? [
+        { date: now, changeDescription: 'Task created' },
+      ],
     };
 
     if (selectedTask) {
@@ -82,9 +85,7 @@ export const Form = ({ className }: Props) => {
   };
 
   useEffect(() => {
-    console.log('selectedTask', selectedTask);
     if (selectedTask) {
-      console.log('wchodze');
       setTitle(selectedTask.title);
       setDescription(selectedTask.description);
       setPriority(selectedTask.priority);
@@ -93,7 +94,7 @@ export const Form = ({ className }: Props) => {
 
   return (
     <Modal
-      open={isFormModalOpen}
+      isOpen={isFormModalOpen}
       onCancel={handleCancelClick}
       onConfirm={handleConfirmClick}
       title={selectedTask ? 'Edit task' : 'Create Task'}
