@@ -1,13 +1,16 @@
 .task-history {
-  &-container {
-    margin: 2em 0;
+  &-title {
+    font-size: 1.3rem;
+    color: var(--color-primary);
   }
 
   &-list {
-    list-style: none;
+    list-style: disc;
+    padding: 0 1.5rem;
   }
 
   &-entry {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    word-break: break-all;
   }
 }

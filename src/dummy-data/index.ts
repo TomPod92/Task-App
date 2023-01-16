@@ -7,7 +7,7 @@ export const dummyTasksData = [
     description: 'Pay my electricity bills',
     priority: TaskPriority.High,
     status: TaskStatus.Open,
-    history: [],
+    history: [{ date: new Date(), changeDescription: 'Task created' }],
   },
   {
     id: 'def',
@@ -15,7 +15,7 @@ export const dummyTasksData = [
     description: 'I need to walk the dog as soon as possible',
     priority: TaskPriority.Medium,
     status: TaskStatus.Open,
-    history: [],
+    history: [{ date: new Date(), changeDescription: 'Task created' }],
   },
   {
     id: 'ghi',
@@ -23,7 +23,7 @@ export const dummyTasksData = [
     description: 'Finish a task list for Stonly',
     priority: TaskPriority.High,
     status: TaskStatus.Open,
-    history: [],
+    history: [{ date: new Date(), changeDescription: 'Task created' }],
   },
   {
     id: 'fdfd',
@@ -31,7 +31,7 @@ export const dummyTasksData = [
     description: 'Buy lots of things',
     priority: TaskPriority.Low,
     status: TaskStatus.Open,
-    history: [],
+    history: [{ date: new Date(), changeDescription: 'Task created' }],
   },
   {
     id: 'adasdwbc',
@@ -39,7 +39,7 @@ export const dummyTasksData = [
     description: 'I need to pack my things',
     priority: TaskPriority.Medium,
     status: TaskStatus.Open,
-    history: [],
+    history: [{ date: new Date(), changeDescription: 'Task created' }],
   },
   {
     id: 'abdsadsac',
@@ -47,6 +47,6 @@ export const dummyTasksData = [
     description: 'Send a Christmas gift that I forgot',
     priority: TaskPriority.Low,
     status: TaskStatus.Open,
-    history: [],
+    history: [{ date: new Date(), changeDescription: 'Task created' }],
   },
 ];

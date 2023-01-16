@@ -16,11 +16,11 @@ export const TaskHistory = ({ history, className }: Props) => {
 
   return (
     <div className={classNames('task-history-container', className)}>
-      <h3>Task history</h3>
+      <h3 className="task-history-title">Task history</h3>
       <ul className="task-history-list">
         {history.map((entry) => (
           <li className="task-history-entry" key={entry.date.toISOString()}>
-            {intlF.format(entry.date)}-{entry.changeDescription}
+            {intlF.format(entry.date)} - {entry.changeDescription}
           </li>
         ))}
       </ul>

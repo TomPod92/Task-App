@@ -5,9 +5,15 @@
   width: 4rem;
   height: 4rem;
   border-radius: 0 0 0 50%;
+  border-left: 3px solid var(--color-white);
+  border-bottom: 3px solid var(--color-white);
   background-color: var(--color-primary);
   color: var(--color-white);
   z-index: 1;
+
+  @media only screen and (min-width: 600px) {
+    flex-direction: row;
+  }
 
   & svg {
     font-size: 3rem;

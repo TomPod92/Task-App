@@ -17,11 +17,11 @@ export const Column = ({ columnType, className }: Props) => {
   return (
     <div className={classNames('column', className)}>
       <h2 className="column-title">{columnType}</h2>
-      <ul className="task-list">
+      <div className="task-list">
         {filteredTasks.map((task: TaskType) => (
           <Task key={task.id} task={task} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Input } from 'components/Input/Input';
 import { RadioButton } from 'components/RadioButton/RadioButton';
 import { Modal } from 'components/Modal/Modal';
-import { TaskHistory } from 'components/TaskHistory/TaskHistory';
 import { TaskStatus, Task, TaskPriority } from 'types';
 import { useTasks } from 'hooks/useTasks';
 import './form.scss';
@@ -145,8 +144,6 @@ export const Form = ({ className }: Props) => {
             onChange={setPriority}
           />
         </div>
-
-        <TaskHistory history={selectedTask?.history} />
       </form>
     </Modal>
   );
