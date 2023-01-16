@@ -7,7 +7,7 @@
     display: flex;
     gap: 1rem;
 
-    & div {
+    & > div {
       flex: 1;
     }
   }

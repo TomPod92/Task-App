@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { Button } from 'components/Button/Button';
+import { PriorityIcon } from 'components/PriorityIcon/PriorityIcon';
 import { TaskPriority } from 'types';
 import './radioButton.scss';
 
@@ -33,8 +34,14 @@ export const RadioButton = ({
         checked={checked}
         onChange={handleChange}
       />
-      <Button className={checked ? 'checked' : ''} onClick={handleChange}>
-        {label}
+      <Button
+        className={classNames('task-priority-button', {
+          checked: checked,
+        })}
+        onClick={handleChange}
+      >
+        <PriorityIcon priority={value} />
+        <p>{label}</p>
       </Button>
     </div>
   );
