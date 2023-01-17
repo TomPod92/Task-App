@@ -9,7 +9,7 @@ interface IDrawerProps {
   className?: string;
 }
 
-const Drawer = ({ isOpen, head, children, className }: IDrawerProps) => {
+export const Drawer = ({ isOpen, head, children, className }: IDrawerProps) => {
   const bodyRef = useRef<HTMLDivElement>(null);
 
   const bodyHeight = bodyRef.current?.clientHeight
@@ -21,6 +21,7 @@ const Drawer = ({ isOpen, head, children, className }: IDrawerProps) => {
       {head}
       <div
         className={classNames('drawer-body-container', className)}
+        data-testid="drawer-body-container"
         style={{ maxHeight: isOpen ? bodyHeight : 0 }}
       >
         <div className="drawer-body" ref={bodyRef}>
@@ -30,5 +31,3 @@ const Drawer = ({ isOpen, head, children, className }: IDrawerProps) => {
     </div>
   );
 };
-
-export default Drawer;

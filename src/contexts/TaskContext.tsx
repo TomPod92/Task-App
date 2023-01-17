@@ -133,6 +133,7 @@ export const TaskProvider = ({ children }: Props) => {
       setTasks(dummyTasksData);
       setTasksLoading(false);
     }, 2000);
+    setTasks(dummyTasksData);
   }, []);
 
   return (

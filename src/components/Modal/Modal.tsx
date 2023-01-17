@@ -32,6 +32,7 @@ export const Modal = ({
         'model-closed': !isOpen,
       })}
       onClick={onCancel}
+      data-testid="modal"
     >
       <div
         className={classNames('modal', className)}

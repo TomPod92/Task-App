@@ -6,7 +6,7 @@ import { PriorityIcon } from 'components/PriorityIcon/PriorityIcon';
 import { Task as TaskType, taskStatusOrder } from 'types';
 import { useTasks } from 'hooks/useTasks';
 import './task.scss';
-import Drawer from 'components/Drawer/Drawer';
+import { Drawer } from 'components/Drawer/Drawer';
 import { useState } from 'react';
 import { TaskHistory } from 'components/TaskHistory/TaskHistory';
 
@@ -46,6 +46,7 @@ export const Task = ({ task, className }: Props) => {
         <div
           className={classNames('task-item-head', className)}
           onClick={toggleIsOpen}
+          data-testid="task"
         >
           <div className="task-item-head-info">
             <PriorityIcon priority={task.priority} />
