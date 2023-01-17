@@ -75,6 +75,8 @@ export const Form = ({ className }: Props) => {
     } else {
       createTask(newTask);
     }
+
+    resetForm();
   };
 
   const handleCancelClick = () => {
